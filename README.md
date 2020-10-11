@@ -3,7 +3,25 @@ A website that allows one to look up HMRC scale rates by location (country, city
 
 The [official HMRC webpage](https://www.gov.uk/guidance/expenses-rates-for-employees-travelling-outside-the-uk) where you can find the rates, examples, and more information.
 
+**N.B.:** There is no live website for the current application.
 
+## Try it!
+In order to try it locally, first download the repository to your machine. Then, depending on your OS perform the following.
+
+### On Linux/macOS
+In your terminal:
+
+    $ export FLASK_APP=app.py
+    $ flask run
+    * Running on http://127.0.0.1:5000/
+### On Windows
+On Command Prompt:
+
+    C:\path\to\app>set FLASK_APP=app.py
+    $ python -m flask run
+      * Running on http://127.0.0.1:5000/
+  
+  
 ## Technical information
 A MVC framework is used. 
 
@@ -14,8 +32,7 @@ The [official HMRC webpage](https://www.gov.uk/guidance/expenses-rates-for-emplo
 
 The data is then structured in a multi-nested dictionary that contains all the relevant information. It is made persistent by dumping in a JSON file. The latter is only updated (on request of the use of the service) at most once every 24 hours. 
 
-
-## Road map
+## Ideas for improvements
 - Fix parsing when rate is stated in a currency different from the country's main currency 
 - Add register/login features
 - Add history functionality (ie consult past trips and rates)
