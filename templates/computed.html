@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ location }}
+{% endblock %}
+
+{% block main %}
+    <h3>Trip information</h3>
+    <p>Location: {{ location }}</p>
+    <p> Date and time of arrival: {{ dt[0] }}.</p>
+    <p> Date and time of departure: {{ dt[1] }}.</p>
+
+    <h3>Claimable lump sum expense</h3>
+    <p> You can claim {{ res[0] }} {{ ccy }} for your trip.</p>
+    <p> Here's how it was computed: {{ res[1] }}</p>
+{% endblock %}

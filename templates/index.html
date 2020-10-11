@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+    <div class="card-deck text-white text-center">
+        <div class="card bg-dark">
+            <img class="card-img-top" src="/static/small_magnifier.jpg" alt="Image of magnifier">
+            <h5 class="card-title"></h5>
+            <p class="card-text">Look up a city and country's HMRC's rates.</p>
+            <a href="/lookup" class="btn btn-primary">Look Up Rates</a>
+        </div>
+        <div class="card bg-dark">
+            <img class="card-img-top" src="/static/small_pins_map.jpg" alt="Image of pins in map">
+            <h5 class="card-title"></h5>
+            <p class="card-text">Insert your trip details and get your trip's rate.</p>
+            <a href="/compute" class="btn btn-primary">Compute Your Trip's Rate</a>
+        </div>
+    </div>
+
+{% endblock %}

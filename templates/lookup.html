@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Look Up
+{% endblock %}
+
+{% block main %}
+    <script type="text/javascript">
+       function loadCity($country)
+        {
+            var country = $country
+            rates = foo({{rates|tojson}});
+            document.getElementById("city").removeAttribute("disabled");
+
+            // Remove options from previous country select
+            select = document.getElementById("city");
+            if (select.options.length > 1)
+            {
+                let L = select.options.length;
+                for (let i = L; i > 0; i--)
+                {
+                    select.remove(i);
+                }
+            }
+
+            // Fill options with selected country
+            for (let city in rates[country])
+            {
+                if (city != "currency"){
+                    var opt = document.createElement("option");
+                    opt.value = city;
+                    opt.text = city;
+                    select.appendChild(opt);
+                }
+            }
+        }
+    </script>
+    <form action="/lookup" method="POST" name="lookUpForm">
+        <div class="form-group">
+            <select class="form-control" name="country" id="country" onchange=loadCity(value) required="required">
+                <option disabled selected value>Country</option>
+                {% for country in rates %}
+                    <option value="{{ country }}"> {{ country }} </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group" >
+            <select class="form-control" name="city" id="city" disabled required="required">
+                <option disabled selected value>City</option>
+            </select>
+        </div>
+        <button class="btn btn-primary" type="submit" id="submitLookUp">Look Up</button>
+    </form>
+{% endblock %}

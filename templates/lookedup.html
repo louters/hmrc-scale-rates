@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ city }}, {{ country }}
+{% endblock %}
+
+{% block main %}
+    <div class="float-left">
+        <h3>{{city}}, {{ country }}</h3>
+
+        <p>All rates are in {{ ccy }} (unless otherwise stated).</p>
+
+        <table class="table table-striped table-responsive" style="margin: 0 auto">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Subsistence Type</th>
+                    <th scope="col">Rate</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rates %}
+                    <tr>
+                        <td>{{ row }}</td>
+                        {% if rates[row] == 0  and  row == "Breakfast"%}
+                            <td>{{ rates[row] }} (included in room rate)</td>
+                        {% elif row == "24 hour rate" %}
+                            <td>{{ rates[row] }} plus room rate</td>
+                        {% else %}
+                            <td>{{ rates[row] }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

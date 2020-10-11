@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Compute
+{% endblock %}
+
+{% block main %}
+    <script type="text/javascript">
+       function loadCity($country)
+        {
+            rates = foo({{rates|tojson}});
+            document.getElementById("city").removeAttribute("disabled");
+
+            // Remove options from previous country select
+            select = document.getElementById("city");
+            if (select.options.length > 1)
+            {
+                let L = select.options.length;
+                for (let i = L; i > 0; i--)
+                {
+                    select.remove(i);
+                }
+            }
+
+            // Fill options with selected country
+            for (let city in rates[$country])
+            {
+                if (city != "currency"){
+                    var opt = document.createElement("option");
+                    opt.value = city;
+                    opt.text = city;
+                    select.appendChild(opt);
+                }
+            }
+        }
+        function validateDates()
+        {
+            let dt_in = new Date(document.getElementById("date_in").value);
+            let t_in = document.getElementById("time_in").value;
+            dt_in.setHours(t_in.slice(0,2));
+            dt_in.setMinutes(t_in.slice(3,));
+
+            let dt_out = new Date(document.getElementById("date_out").value);
+            let t_out = document.getElementById("time_out").value;
+            dt_out.setHours(t_in.slice(0,2));
+            dt_out.setMinutes(t_in.slice(3,));
+
+            if (dt_out - dt_in <= 0)
+            {
+                alert("Time and date of arrival must occur after time and date of departure.")
+                return false;
+            }
+        }
+    </script>
+    <form action="/compute" method="POST" onsubmit="return validateDates()">
+        <div class="form-group">
+            <select class="form-control" name="country" id="country" onchange=loadCity(value) required="required">
+                <option disabled selected value>Country</option>
+                {% for country in rates %}
+                    <option value="{{ country }}"> {{ country }} </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group" >
+            <select class="form-control" name="city" id="city" disabled required="required">
+                <option disabled selected value>City</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="date_in">Date of arrival: </label>
+            <input type="date" id="date_in" name="date_in" required="required">
+        </div>
+        <div class="form-group">
+            <label for="time_in">Time of arrival: </label>
+            <input type="time" id="time_in" name="time_in" required="required">
+        </div>
+        <div class="form-group">
+            <label for="date_out">Date of departure: </label>
+            <input type="date" id="date_out" name="date_out" required="required">
+        </div>
+        <div class="form-group">
+            <label for="time_out">Time of departure: </label>
+            <input type="time" id="time_out" name="time_out" required="required">
+        </div>
+        <button class="btn btn-primary" type="submit">Compute</button>
+    </form>
+
+{% endblock %}
